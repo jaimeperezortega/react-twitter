@@ -26,7 +26,14 @@ const TweetsPage = ()=>{
 
     const [tweets, setTweets] = React.useState([]); //USAMOS EL USESTATE PARA ESTABLECER COMO ESTADO INICIAL DEL COMPONENTE UN ARRAY VACÍO HASTA QUE CARGUE LOS TWEETS DESDE EL SERVIDOR. NUESTRA INTENCIÓN ES QUE SE MONTE EL COMPONENTE CON EL ESTADO VACÍO (POR ESO PONEMOS UN ARRAY VACIO), LUEGO HACEMOS UN PRIMER RENDER Y  PARTIR DE AHI CARGUE LOS TWEES CAMBIANDO SU ESTADO
 
-    const tweetItems = tweets.map(tweet => <li key={tweet.id}>{tweet.content}</li>) // Generamos un li con cada tweet a partir del método map. Por cada tweet va a generar un li. Cuando en React renderiamos un listado de elementos iguales entre ellos (en este caso un array), nos "obliga" que por cada uno de ellos le pasemos un atributo "key id". Cuando es una lsta estática no es vital pero cuando es dinámica, React necesita ese id para asociar cada elemento de JSX con cada elemento del DOM. Siempre que hagamos listas en array le asignamos a cada elemento una key
+    const handleClick = ()=> alert("Has hecho click en el li");
+    
+
+    const tweetItems = tweets.map(tweet => ( // pasamos el evento onClick por props y dentro de las llaves hay que poner la función que se debe ejecutar cuando se produzca el evento en cuestión. En este caso hacer click en el <li se dispara mi función handleClick que lo que ejecuta es la aparición de una ventana con el texto 
+        <li onClick= {handleClick} key={tweet.id}> 
+        {tweet.content}
+        </li>
+        )); // Generamos un li con cada tweet a partir del método map. Por cada tweet va a generar un li. Cuando en React renderiamos un listado de elementos iguales entre ellos (en este caso un array), nos "obliga" que por cada uno de ellos le pasemos un atributo "key id". Cuando es una lsta estática no es vital pero cuando es dinámica, React necesita ese id para asociar cada elemento de JSX con cada elemento del DOM. Siempre que hagamos listas en array le asignamos a cada elemento una key
 
     React.useEffect(async ()=>{ //Usamos el useEffect para que se ejecute después de la primera renderizacion. Lo que va a hacer es consumir la promesa de la peticion get del cliente y llamar al setTweets del useState para cambiar el estado inicial del componente y forzar así una nueva renderización
         const tweets = await getLatestTweets()
