@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 
+
+//EL COMPONENTE APP ES UN COMPONENTE DE TIPO FUNCTION QUE DEVUELVE EL HTML QUE VEMOS MÁS ABAJO
 function App() {
   return (
     <div className="App">
