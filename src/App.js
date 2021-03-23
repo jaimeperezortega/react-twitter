@@ -1,6 +1,7 @@
 
 import './App.css';
 import TweetsPage from './components/tweets/TweetsPage';
+import Button from './components/shared/Button';
 
 
 
@@ -8,6 +9,7 @@ import TweetsPage from './components/tweets/TweetsPage';
 function App() {
   return (
     <div className="App">
+      <Button variant ="primary" > Log in </Button>
      <TweetsPage />
     </div>
   );

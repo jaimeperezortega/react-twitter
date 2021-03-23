@@ -3,6 +3,19 @@ import React from 'react';
 import { useEffect } from 'react';
 import {getLatestTweets} from '../../api/tweets'
 
+//Para aplicar estilos , una de las formas que propone React es a través de su librería classnames. Importamos entonces la librería para poder usarla posteriormente:
+
+import classnames from 'classnames';
+
+//Para importar una hoja de estilos que queramos luego pasarle a uno de los hijos. Aqui lo podemos hacer porque webpack nos permite meter una hoja de estilos css en un archivo javascript. Normalmente no sería posible
+import './TweetsPage.css';
+
+//Cargamos también el archivo de estilos css pero que funciona con CSS modules
+
+import scopedStyles from  './TweetsPage.module.css';
+
+console.log(scopedStyles);
+
 // const TWEETS =  [
 //     {
 //       "content": "Nos hace mucha ilusión anunciar la fecha del ESTRENO de Eso que tu me das, documental con la última entrevista a Pau Donés. 30 D         E SEPTIEMBRE, en cines de toda España. @WarnerBrosSpain Y este es el cartel definitivo, con algunas frases de críticas que ya se han publicado.",
@@ -22,7 +35,7 @@ import {getLatestTweets} from '../../api/tweets'
 
 //Creamos el componente con una función que va a devolver los elementos de nuestro componente
 
-const TweetsPage = ()=>{
+const TweetsPage = ({className})=>{
 
     const [tweets, setTweets] = React.useState([]); //USAMOS EL USESTATE PARA ESTABLECER COMO ESTADO INICIAL DEL COMPONENTE UN ARRAY VACÍO HASTA QUE CARGUE LOS TWEETS DESDE EL SERVIDOR. NUESTRA INTENCIÓN ES QUE SE MONTE EL COMPONENTE CON EL ESTADO VACÍO (POR ESO PONEMOS UN ARRAY VACIO), LUEGO HACEMOS UN PRIMER RENDER Y  PARTIR DE AHI CARGUE LOS TWEES CAMBIANDO SU ESTADO
 
@@ -43,11 +56,23 @@ const TweetsPage = ()=>{
 
     },[]) //Le hemos puesto un array al final del useEffect para que en principi solo se ejecute una vez despues de la primera renderizacion. Este segundo argumento sirve para establecer la lógica que va a provocar que este método se vuelva a ejecutar y en este caso al ser un array vacío le decimos que solo lo haga una vez
 
+    //1ª forma de aplicar estilos en React --> Para poder agrupar las clases css que quier definir en el hijo (en este caso "tweetsPage") con las clases que me vengan desde el padre, hemos utilizado la librería classname y en el div las hemos concatenado para asociarles las 2. Las que defino en el momento + las que le vienen desde el padre. En este caso podemos importar estilos css como cualquier otro import ya que create React app lo permite
+
+    //2ª forma --> de aplicar estilos en React: aplicamos un objeto style y ponemos los valores con camelCase (ejemplo en el ul). Dentro de esas llaves podemos incluso aplicar condicionales
+
+    //3ª forma --> CSS Modules. Son clases con un scope local al componente. Me van a asegurar que solo se aplican en ese componente y no las voy a poder reescribir desde fuera. Lo voy a crear llama´ndolo TweetsPage.module.css. Para utilizar estas clases css hay que añadirlas al componente con el nombre con el que las hemos importado: scopedStyles.tweetspage
+
+    // 4ª forma styled components. La libreria mas utilizada para ello. styled-components-com. Nos permite generar componentes REACT basados en estilos. En este caso, aunque sea JS nos permite escirbirlo en CSS puro. Es muy muy util para generar componentes pequeñitos (un botón, un input...). Vamos a crear un componente button que va a ser reutilizable en otras partes de la aplicación. 
+
+    const ulStyles= {color: tweets.length > 2 ? "white" : "green", }
+
     return(
-        <div className="tweetsPage">
-            <ul>
+        <div className= {classnames('tweetsPage', className)} > 
+            <ul style={ulStyles}>
                 {tweetItems}
             </ul>
+
+            <p className= {classnames(scopedStyles.tweetsPage, className)}>Aquí vamos a ver como se aplica el estilo de CSS Modules</p>
         </div>
     )
 }
