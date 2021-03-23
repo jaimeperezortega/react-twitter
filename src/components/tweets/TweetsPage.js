@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useEffect } from 'react';
-import {getLatestTweets} from '../../api/tweets'
+import {getLatestTweets} from '../../api/tweets';
 
 //Para aplicar estilos , una de las formas que propone React es a través de su librería classnames. Importamos entonces la librería para poder usarla posteriormente:
 
@@ -13,6 +13,7 @@ import './TweetsPage.css';
 //Cargamos también el archivo de estilos css pero que funciona con CSS modules
 
 import scopedStyles from  './TweetsPage.module.css';
+import Layout from '../layout/Layout';
 
 console.log(scopedStyles);
 
@@ -67,13 +68,18 @@ const TweetsPage = ({className})=>{
     const ulStyles= {color: tweets.length > 2 ? "white" : "green", }
 
     return(
+
+        <Layout title="What´s going on...">
+
         <div className= {classnames('tweetsPage', className)} > 
             <ul style={ulStyles}>
                 {tweetItems}
             </ul>
 
-            <p className= {classnames(scopedStyles.tweetsPage, className)}>Aquí vamos a ver como se aplica el estilo de CSS Modules</p>
+        
         </div>
+        </Layout>
+       
     )
 }
 

@@ -9,7 +9,7 @@ import Button from './components/shared/Button';
 function App() {
   return (
     <div className="App">
-      <Button variant ="primary" > Log in </Button>
+      {/* <Button variant ="primary" > Log in </Button> */}
      <TweetsPage />
     </div>
   );
